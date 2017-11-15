@@ -41,9 +41,9 @@ def list_entries(data):
 
 def add_entries(data):
     text = input("Type your entry:")
-    journal.add_entry(text, data)
-    #data.append(text)
+#    journal.add_entry(text, data)
+    data.append(text)
 
 
-if __name__ == '__main':
+if __name__ == '__main__':
     main()
