@@ -17,17 +17,17 @@ def print_header(banner_name):
 
 def run_event_loop():
     print("What you wanna do with your journal?")
-    cmd = None
+    cmd = "non_empty"
     journal_name = 'default'
     journal_data = journal.load(journal_name)
-    while cmd != 'x':
+    while cmd != 'x' and cmd:
         cmd = input("[L]ist entries, [A]dd an entry, E[x]it: ")
         cmd = cmd.lower().strip(" ")
         if cmd == 'l':
             list_entries(journal_data)
         elif cmd == 'a':
             add_entries(journal_data)
-        elif cmd != 'x':
+        elif cmd != 'x' and cmd:
             print("Sorry, we do'nt understand {0}".format(cmd))
     print("Done , Good Bye")
     journal.save(journal_name, journal_data)
