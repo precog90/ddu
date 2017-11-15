@@ -9,6 +9,7 @@ def main():
 
 def print_header(banner_name):
     print()
+    print()
     print("----------------------------------------------------")
     print("                {0}".format(banner_name))
     print("-----------------------------------------------------")
