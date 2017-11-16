@@ -1,5 +1,8 @@
 import requests
 import bs4
+import collections
+
+report = collections.namedtuple('report', ['city', 'condition', 'temp'])
 
 def main():
     # print the header
@@ -9,7 +12,13 @@ def main():
     # get html from web
     html = get_html_from_web(city)
     # parse the html
-    get_weather_from_html(html)
+    weather_report = get_weather_from_html(html)
+
+    print("Forecast in {} is {} and {}".format(
+        weather_report.city,
+        weather_report.condition,
+        weather_report.temp
+    ))
     # display for the forecast
 
 
@@ -32,7 +41,28 @@ def get_html_from_web(city):
 
 def get_weather_from_html(html):
     soup = bs4.BeautifulSoup(html.text, 'html.parser')
-    print(soup)
+    #weather_information = {'city': 'columns small-12', 'condition': 'condition-icon small-6 medium-12 columns', 'temp': 'current-temp', 'feels_like': 'feels-like'}
+    city = soup.find('h1').text.rstrip()
+    condition_data = soup.findAll('div', attrs={'class': 'condition-icon small-6 medium-12 columns'})
+    units = (soup.find('span', attrs={'class': 'wu-label'})).text.strip()
+    temp = (soup.find('span', attrs={'class': 'wu-value wu-value-to'})).text + units
+    for x in condition_data:
+        condition = x.find('p').text
+    #print(city)
+    #print(condition)
+    #print(temp)
+    #print(units)
+    #for city in city_data:
+     #   city = city.text
+      #  print(city)
+        #data = soup.findAll('div', attrs={'class': 'condition-icon small-6 medium-12 columns'})
+        #print(data)
+        #for x in data:
+        #    print(x.find('p').text)
+         #   print()
+    weather_report = report(city, condition, temp)
+    return weather_report
+
 
 
 if __name__ == '__main__':
